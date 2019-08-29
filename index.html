@@ -94,10 +94,6 @@
          const rootElement = document.getElementById('root');
 
          function Clock({ hours = 100, minutes = 7, seconds = 0, miliseconds = -1234 }) {
-            //       {this.props.conditionA ? "Condition A"
-            // : this.props.conditionB ? "Condition B"
-            // : "Neither"}
-
             hours > 59 ? (hours = 59) : hours < 0 ? (hours = 0) : hours;
             minutes > 59 ? (minutes = 59) : minutes < 0 ? (minutes = 0) : minutes;
             seconds > 59 ? (seconds = 59) : seconds < 0 ? (seconds = 0) : seconds;
@@ -106,8 +102,7 @@
                : miliseconds < 0
                ? (miliseconds = 0)
                : miliseconds;
-            console.log(String(minutes).length);
-            console.log(0 + String(minutes));
+
             const checkHours = String(hours).length < 2 ? 0 + String(hours) : hours;
             const checkMinutes = String(minutes).length < 2 ? 0 + String(minutes) : minutes;
             const checkSeconds = String(seconds).length < 2 ? 0 + String(seconds) : seconds;
@@ -122,7 +117,6 @@
                   Pozostało {checkHours}:{checkMinutes}:{checkSeconds}:{checkMiliseconds}
                </h2>
             );
-            console.log(hours + ' - ' + minutes + ' - ' + seconds);
          }
          const element = <Clock />;
 
