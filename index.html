@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      <title>Document</title>
+      <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+      <script
+         src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+         crossorigin
+      ></script>
+      <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+      <style>
+         .App {
+            font-family: sans-serif;
+         }
+
+         .Timebox-Editor {
+            text-align: right;
+            border: 1px solid gray;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+         }
+
+         input {
+            min-width: 60%;
+            margin-left: 20px;
+            font-size: 16px;
+         }
+
+         button {
+            font-size: 16px;
+            margin-left: 10px;
+         }
+
+         .Timebox {
+            border: 1px solid gray;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+         }
+
+         .Clock {
+            color: orangered;
+         }
+
+         .ProgressBar {
+            border: 1px solid orangered;
+            border-radius: 5px;
+            height: 25px;
+            margin-bottom: 20px;
+            padding: 5px;
+         }
+
+         .ProgressBar > div {
+            height: 100%;
+            background-color: orangered;
+         }
+
+         .inactive {
+            filter: blur(2px) grayscale(1);
+         }
+      </style>
+   </head>
+   <body>
+      <h1>Kurs Reacta Tydzień 2</h1>
+      <hr />
+      <div class="App">
+         <div class="TimeboxEditor inactive">
+            <label
+               >Co robisz?
+               <input disabled value="Uczę się skrótów klawiszowych" type="text"/></label
+            ><br />
+            <label>Ile minut? <input disabled value="25" type="number"/></label><br />
+            <button disabled>Zacznij</button>
+         </div>
+         <div class="Timebox">
+            <h1>Uczę się skrótów klawiszowych</h1>
+            <div id="root"></div>
+
+            <div class="ProgressBar">
+               <div style="width: 45%"></div>
+            </div>
+            <button disabled>Start</button>
+            <button>Stop</button>
+            <button>Pauzuj</button>
+            Liczba przerw: 2
+         </div>
+      </div>
+
+      <script type="text/babel">
+         const rootElement = document.getElementById('root');
+
+         function Clock({ hours = 100, minutes = 7, seconds = 0, miliseconds = -1234 }) {
+            //       {this.props.conditionA ? "Condition A"
+            // : this.props.conditionB ? "Condition B"
+            // : "Neither"}
+
+            hours > 59 ? (hours = 59) : hours < 0 ? (hours = 0) : hours;
+            minutes > 59 ? (minutes = 59) : minutes < 0 ? (minutes = 0) : minutes;
+            seconds > 59 ? (seconds = 59) : seconds < 0 ? (seconds = 0) : seconds;
+            miliseconds > 999
+               ? (miliseconds = 999)
+               : miliseconds < 0
+               ? (miliseconds = 0)
+               : miliseconds;
+            console.log(String(minutes).length);
+            console.log(0 + String(minutes));
+            const checkHours = String(hours).length < 2 ? 0 + String(hours) : hours;
+            const checkMinutes = String(minutes).length < 2 ? 0 + String(minutes) : minutes;
+            const checkSeconds = String(seconds).length < 2 ? 0 + String(seconds) : seconds;
+            const checkMiliseconds =
+               String(miliseconds).length < 2
+                  ? '00' + String(miliseconds)
+                  : String(miliseconds).length < 3
+                  ? '00' + String(miliseconds)
+                  : miliseconds;
+            return (
+               <h2 className="Clock">
+                  Pozostało {checkHours}:{checkMinutes}:{checkSeconds}:{checkMiliseconds}
+               </h2>
+            );
+            console.log(hours + ' - ' + minutes + ' - ' + seconds);
+         }
+         const element = <Clock />;
+
+         ReactDOM.render(element, rootElement);
+      </script>
+   </body>
+</html>
