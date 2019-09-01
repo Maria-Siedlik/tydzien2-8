@@ -80,9 +80,6 @@
             <h1>Uczę się skrótów klawiszowych</h1>
             <div id="root"></div>
 
-            <div class="ProgressBar">
-               <div style="width: 45%"></div>
-            </div>
             <button disabled>Start</button>
             <button>Stop</button>
             <button>Pauzuj</button>
@@ -93,32 +90,51 @@
       <script type="text/babel">
          const rootElement = document.getElementById('root');
 
-         function Clock({ hours = 100, minutes = 7, seconds = 0, miliseconds = -1234 }) {
-            hours > 59 ? (hours = 59) : hours < 0 ? (hours = 0) : hours;
-            minutes > 59 ? (minutes = 59) : minutes < 0 ? (minutes = 0) : minutes;
-            seconds > 59 ? (seconds = 59) : seconds < 0 ? (seconds = 0) : seconds;
-            miliseconds > 999
-               ? (miliseconds = 999)
-               : miliseconds < 0
-               ? (miliseconds = 0)
-               : miliseconds;
+         function time(value, min, max, digitsCount) {
+            if (value > max) {
+               value = max;
+            } else if (value < min) {
+               value = min;
+            } else {
+               value = value;
+            }
 
-            const checkHours = String(hours).length < 2 ? 0 + String(hours) : hours;
-            const checkMinutes = String(minutes).length < 2 ? 0 + String(minutes) : minutes;
-            const checkSeconds = String(seconds).length < 2 ? 0 + String(seconds) : seconds;
-            const checkMiliseconds =
-               String(miliseconds).length < 2
-                  ? '00' + String(miliseconds)
-                  : String(miliseconds).length < 3
-                  ? '00' + String(miliseconds)
-                  : miliseconds;
+            let suma = 0;
+            const zerosCount = [];
+            const numb = String(value);
+            if (numb.length == digitsCount) {
+               value = String(value);
+            } else if (numb.length < digitsCount) {
+               const missingDigits = digitsCount - numb.length;
+
+               for (let i = 1; i < missingDigits; i++) {
+                  zerosCount[i] = '0';
+                  suma += zerosCount[i];
+               }
+
+               value = suma + String(value);
+            }
+            return value;
+         }
+
+         function Clock() {
+            const hours = 8;
+            const minutes = 10;
+            const seconds = 25;
+            const miliseconds = 9;
             return (
                <h2 className="Clock">
-                  Pozostało {checkHours}:{checkMinutes}:{checkSeconds}:{checkMiliseconds}
+                  Pozostało {time(hours, 0, 23, 2)}:{time(minutes, 0, 59, 2)}:
+                  {time(seconds, 0, 59, 2)}.{time(miliseconds, 0, 999, 3)};
                </h2>
             );
          }
-         const element = <Clock />;
+
+         const element = (
+            <div>
+               <Clock />
+            </div>
+         );
 
          ReactDOM.render(element, rootElement);
       </script>
